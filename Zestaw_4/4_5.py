@@ -15,10 +15,8 @@ def reverse_recursive(list , left , right):
     if(left < 0 or right >= len(list)):
         return -1
     list[left] , list[right] = list[right] , list[left]
-    left += 1
-    right -= 1
     if(left < right):
-        reverse_recursive(list , left , right)
+        reverse_recursive(list , left+1 , right-1)
     return list
 
 list = [0 , 1 , 2 , 3 , 4 , 5 , 6 , 7 , 8 , 9]

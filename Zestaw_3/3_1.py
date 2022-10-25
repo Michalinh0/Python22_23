@@ -7,7 +7,7 @@
 #else:
 #    result = y;
 
-#Przykład ten jest niepoprawny, ponieważ instrukcje są oddzielane średnikami, które nie są konieczne
+#Przykład ten jest poprawny
 
 # Przykład 2
 

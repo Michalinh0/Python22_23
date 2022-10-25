@@ -1,20 +1,19 @@
 def make_ruler(n):
-    res = "|" + "....|"*n
-    res = res + "\n0"
+    upper = []
+    lower = ['0']
+    upper.append("....".join('|'*(n+1)))
     for i in range(1 , n+1):
-        res = res + str(i).rjust(5)
-    return res
+        lower.append(str(i).rjust(5))
+    return ''.join(upper) + '\n' + ''.join(lower)
 
 def make_grid(rows , cols):
-    result = ""
-    for i in range(rows):
-        result += "+" + "---+"*cols
-        result += '\n'
-        result += "|   "*cols + '|'
-        result += '\n'
-    result += "+" + "---+"*cols
-    result += '\n'
-    return result
+    lines = []
+    for i in range(2*rows + 1):
+        if(i % 2 == 0):
+            lines.append("---".join('+'*cols))
+        else:
+            lines.append("   ".join('|'*cols))
+    return '\n'.join(lines)
 
 n = input("Input length : ")
 try:
