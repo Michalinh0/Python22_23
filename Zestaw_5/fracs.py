@@ -7,15 +7,16 @@ def LCM(a, b):
 
 def simplify(frac):
     divisor = math.gcd(frac[0] , frac[1])
-    frac[0] , frac[1] = int(frac[0] / divisor) , int(frac[1] / divisor)
-    return frac
+    result = [0 , 0]
+    result[0] , result[1] = int(frac[0] / divisor) , int(frac[1] / divisor)
+    return result
 
 def add_frac(frac1, frac2):
     result = [0, 0]
     denominator = LCM(frac1[1], frac2[1])
-    frac1[0] = frac1[0] * denominator / frac1[1]
-    frac2[0] = frac2[0] * denominator / frac2[1]
-    result[0] = int(frac1[0]+frac2[0])
+    numerator1 = frac1[0] * denominator / frac1[1]
+    numerator2 = frac2[0] * denominator / frac2[1]
+    result[0] = int(numerator1+numerator2)
     result[1] = int(denominator)
     simplify(result)
     return result
@@ -23,9 +24,9 @@ def add_frac(frac1, frac2):
 def sub_frac(frac1, frac2):
     result = [0, 0]
     denominator = LCM(frac1[1], frac2[1])
-    frac1[0] = frac1[0] * denominator / frac1[1]
-    frac2[0] = frac2[0] * denominator / frac2[1]
-    result[0] = int(frac1[0]-frac2[0])
+    numerator1 = frac1[0] * denominator / frac1[1]
+    numerator2 = frac2[0] * denominator / frac2[1]
+    result[0] = int(numerator1-numerator2)
     result[1] = int(denominator)
     simplify(result)
     return result
@@ -39,9 +40,8 @@ def mul_frac(frac1, frac2):
 
 def div_frac(frac1, frac2):
     frac = [0, 0]
-    frac[0] = int(frac1[0]*frac2[1])
-    frac[1] = int(frac1[1]*frac2[0])
-    simplify(frac)
+    tmp = [frac2[1] , frac2[0]]
+    frac = mul_frac(frac1 , tmp) # Dzielenie = mnożenie przez odwrotność
     return frac
 
 def is_positive(frac):
@@ -59,13 +59,13 @@ def is_zero(frac):
 
 def cmp_frac(frac1, frac2):
     base = LCM(frac1[1], frac2[1])
-    frac1[0] = frac1[0] * base / frac1[1]
-    frac2[0] = frac2[0] * base / frac2[1]
-    if(frac1[0] > frac2[0]):
+    numerator1 = frac1[0] * base / frac1[1]
+    numerator2 = frac2[0] * base / frac2[1]
+    if(numerator1 > numerator2):
         return 1
-    elif(frac1[0] == frac2[0]):
+    elif(numerator1 == numerator2):
         return 0
-    elif(frac1[0] < frac2[0]):
+    elif(numerator1 < numerator2):
         return -1
 
 def frac2float(frac):
@@ -82,8 +82,7 @@ import unittest
 
 class TestFractions(unittest.TestCase):
 
-    def setUp(self):
-        self.zero = [0, 1]
+
 
     def test_add_frac(self):
         self.assertEqual(add_frac([1, 2], [1, 3]), [5, 6])
@@ -92,10 +91,10 @@ class TestFractions(unittest.TestCase):
         self.assertEqual(sub_frac([1, 2], [1, 3]), [1,6])
 
     def test_mul_frac(self):
-        self.assertEqual(mul_frac(f3,f4), [9,1])
+        self.assertEqual(mul_frac(f1 , f3) ,  [-3, 2])
 
     def test_div_frac(self):
-        self.assertEqual(div_frac(f1,f4), [-1, 6])
+        self.assertEqual(div_frac(f1 , f3) ,  [-1, 6])
 
     def test_is_positive(self):
         self.assertFalse(is_positive(f1))
@@ -104,7 +103,7 @@ class TestFractions(unittest.TestCase):
         self.assertTrue(is_zero(f5))
 
     def test_cmp_frac(self):
-        self.assertEqual(cmp_frac(f1,f5), -1)
+        self.assertEqual(cmp_frac(f3,f4), 0)
  
     def test_frac2float(self):
         self.assertEqual(frac2float(f1), -0.5)
