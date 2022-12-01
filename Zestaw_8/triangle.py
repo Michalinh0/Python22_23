@@ -82,15 +82,15 @@ class Triangle:
         return Point(self.left , self.top)
 
     @property
-    def topright(self) -> float:
+    def topright(self) -> Point:
         return Point(self.right , self.top)
 
     @property
-    def bottomleft(self) -> float:
+    def bottomleft(self) -> Point:
         return Point(self.left , self.bottom)
 
     @property
-    def bottomright(self) -> float:
+    def bottomright(self) -> Point:
         return Point(self.right , self.bottom)
 
     
