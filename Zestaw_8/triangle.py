@@ -9,16 +9,6 @@ class Triangle:
         self.pt3 = Point(x3, y3)
         if(self.area()==0):
             raise Exception ("Three points provided are collinear")
-        self._top = max(y1, y2, y3)
-        self._bottom = min(y1 , y2 , y3)
-        self._left = min(x1 , x2 , x3)
-        self._right = max(x1 , x2 , x3)
-        self._width = self.right - self.left
-        self._height = self.top - self.bottom
-        self._topleft = Point(min(x1 , x2 , x3) , max(y1 , y2 , y3))
-        self._topright = Point(max(x1 , x2 , x3) , max(y1 , y2 , y3))
-        self._bottomleft = Point(min(x1 , x2 , x3) , min(y1 , y2 , y3))
-        self._bottomright = Point(max(x1 , x2 , x3) , min(y1 , y2 , y3))
 
     def __str__(self):          # "[(x1, y1), (x2, y2), (x3, y3)]"
         return (f"[({self.pt1.x}, {self.pt1.y}), ({self.pt2.x}, {self.pt2.y}), ({self.pt3.x}, {self.pt3.y})]")
