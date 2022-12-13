@@ -18,13 +18,10 @@ class Field:
         if self.neighbouring_bombs == 0:
             return "0"
         else:
-            return
+            return "click"
 
     def flag(self):
         self.flagged = not self.flagged
-
-    def detonated(self):
-        return "mine"
 
     def setbomb(self):
         self.bomb = True
@@ -40,5 +37,11 @@ class Field:
         if self.clicked and not self.bomb:
             return str(self.neighbouring_bombs)
         return "mine"
+
+    def image_lost(self):
+        if self.flagged and not self.bomb:
+            return "wrong"
+        else:
+            return self.image()
 
     
