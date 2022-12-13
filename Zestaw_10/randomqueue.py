@@ -15,7 +15,8 @@ class RandomQueue:
             raise ValueError("Kolejka jest pusta")
         rand = random.randint(0,self.elements() - 1)
         self.count -=1
-        return self.items.pop(rand)
+        self.items[rand] , self.items[-1] = self.items[-1] , self.items[rand]
+        return self.items.pop()
         
     def is_empty(self): 
         return self.count == 0

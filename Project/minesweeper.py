@@ -25,10 +25,10 @@ class Game:
                     running = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     position = pygame.mouse.get_pos()
-                    rc = pygame.mouse.get_pressed()[2]
-                    self.handle_click(position,rc)
+                    rightclick = pygame.mouse.get_pressed()[2]
+                    self.handle_click(position,rightclick)
                     #print(self.board.nonbombs)
-                    if(not sound_played and self.board.lost):
+                    if(not sound_played and self.board.getlost()):
                         pygame.mixer.Sound("explosion.mp3").play()
                         sound_played = True
             self.draw()
@@ -68,7 +68,7 @@ class Game:
         text_rect = text.get_rect(center = (self.screen_size[0] // 2 , 50))
         self.screen.blit(text , text_rect)
 
-    def handle_click(self , position , rc):
+    def handle_click(self , position , rightclick):
         pygame.mixer.Sound("click.mp3").play()
         if(self.board.lost):
             return
@@ -78,7 +78,7 @@ class Game:
         y = position[0] // self.piece_size[0]
         #print(x,y)
         if(position[0] >= 0 and position[1] >= 0):
-            self.board.handle_click(x , y , rc)
+            self.board.handle_click(x , y , rightclick)
 
 
 

@@ -55,21 +55,21 @@ class Board:
     def printboard(self):
         for i in range(self.height):
             for j in range(self.width):
-                if(self.game_area[i][j].bomb):
+                if(self.game_area[i][j].getbomb()):
                     print("*" , end = " ")
                 else:
                     print(self.game_area[i][j].neighbouring_bombs , end = " ")
             print(" ")
 
-    def handle_click(self , x , y , rc):
-        if(rc and self.available_flags != 0):
+    def handle_click(self , x , y , rightclick):
+        if(rightclick and self.available_flags != 0):
             self.game_area[x][y].flag()
         else:
             res = self.reveal(x,y)
 
     def reveal(self , x , y):
         res = self.game_area[x][y].reveal()
-        print(res ,x, y)
+        #print(res ,x, y)
         if not res == "flag":
             self.nonbombs -= 1
         if res == "mine":
@@ -92,6 +92,8 @@ class Board:
             if(y != 0): # W
                 self.reveal(x,y-1)
 
+    def getlost(self):
+        return self.lost
 
 
 

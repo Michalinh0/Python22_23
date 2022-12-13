@@ -44,4 +44,7 @@ class Field:
         else:
             return self.image()
 
+    def getbomb(self):
+        return self.bomb
+
     
