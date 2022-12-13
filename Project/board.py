@@ -94,22 +94,3 @@ class Board:
             for j in i:
                 if(not j.clicked and j.getbomb()):
                     j.reveal()
-
-
-
-
-    
-
-
-
-'''
-Code for later:
-
-bomb_locations = random.sample(range(0 , self.height * self.width) , self.bombs)
-        print(bomb_locations)
-
-if(i*self.height + j in bomb_locations):
-    field.setbomb()
-    self.fill_neighbours(i,j)
-
-'''
