@@ -33,10 +33,10 @@ class Game:
                         sound_played = True
             self.draw()
             pygame.display.flip()
-            if(self.board.won):
-                pygame.mixer.Sound("win.mp3").play()
-                time.sleep(10)
-                running = False
+            if(self.board.win()):
+                if(not sound_played):
+                    pygame.mixer.Sound("win.mp3").play()
+                    sound_played = True
 
     
     def load_images(self):
@@ -61,7 +61,7 @@ class Game:
                 #print(position)
                 position = position[0] + self.piece_size[0] , position[1] 
             position = 0 , position[1] + self.piece_size[1]
-        if(not self.board.lost and not self.board.won):
+        if(not self.board.getlost() and not self.board.win()):
             self.tick = pygame.time.get_ticks()
         text = f"{self.tick // 1000}.{round(self.tick // 100 % 10, 1)}"
         text = self.font.render(text , True , (0 , 0 , 0))
@@ -70,7 +70,7 @@ class Game:
 
     def handle_click(self , position , rightclick):
         pygame.mixer.Sound("click.mp3").play()
-        if(self.board.lost):
+        if(self.board.lost or self.board.win()):
             return
         position = position[0] , position[1] - 100
         #print(position , rc)

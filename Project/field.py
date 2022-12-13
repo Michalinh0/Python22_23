@@ -21,7 +21,8 @@ class Field:
             return "click"
 
     def flag(self):
-        self.flagged = not self.flagged
+        if(not self.clicked):
+            self.flagged = not self.flagged
 
     def setbomb(self):
         self.bomb = True

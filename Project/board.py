@@ -9,7 +9,6 @@ class Board:
         self.width = width
         self.bombs = bombs
         self.lost = False
-        self.won = False
         self.nonbombs = height * width - bombs
         self.available_flags = bombs
         self.prepare()
@@ -26,7 +25,7 @@ class Board:
 
     def put_bombs(self):
         bomb_locations = random.sample(range(0 , self.height * self.width) , self.bombs)
-        print(bomb_locations)
+        #print(bomb_locations)
         for i in range(self.height):
             for j in range(self.width):
                 if(i*self.height + j in bomb_locations):
@@ -52,15 +51,6 @@ class Board:
         if(y != 0): # W
             self.game_area[x][y-1].add_neighbouring_bomb()
 
-    def printboard(self):
-        for i in range(self.height):
-            for j in range(self.width):
-                if(self.game_area[i][j].getbomb()):
-                    print("*" , end = " ")
-                else:
-                    print(self.game_area[i][j].neighbouring_bombs , end = " ")
-            print(" ")
-
     def handle_click(self , x , y , rightclick):
         if(rightclick and self.available_flags != 0):
             self.game_area[x][y].flag()
@@ -70,10 +60,11 @@ class Board:
     def reveal(self , x , y):
         res = self.game_area[x][y].reveal()
         #print(res ,x, y)
-        if not res == "flag":
+        if res == "click" or res == "0":
             self.nonbombs -= 1
         if res == "mine":
             self.lost = True
+            self.lose()
         if res == "0":
             if(x != 0 and y != 0): # NW
                 self.reveal(x-1 , y-1)
@@ -91,9 +82,18 @@ class Board:
                 self.reveal(x+1,y-1)
             if(y != 0): # W
                 self.reveal(x,y-1)
+        
+    def win(self):
+        return self.nonbombs == 0
 
     def getlost(self):
         return self.lost
+
+    def lose(self):
+        for i in self.game_area:
+            for j in i:
+                if(not j.clicked and j.getbomb()):
+                    j.reveal()
 
 
 
